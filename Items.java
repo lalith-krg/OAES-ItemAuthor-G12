@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Items{
     static Connection con;    
-    ArrayList<HashMap<String, ArrayList<Question>>> versions = new ArrayList<HashMap<String, ArrayList<Question>>>();
+//     ArrayList<HashMap<String, ArrayList<Question>>> versions = new ArrayList<HashMap<String, ArrayList<Question>>>();
 
     Items(){
         con = connect.getConnection();
@@ -89,13 +89,13 @@ public class Items{
             return;
         }
 
-        for (int i = 0; i < versions.get(ver - 1).get(subject).size(); i++) {
-            if (versions.get(ver - 1).get(subject).get(i).getId() == ID) {
-                versions.get(ver - 1).get(subject).get(i).storeFile(path);
+//         for (int i = 0; i < versions.get(ver - 1).get(subject).size(); i++) {
+//             if (versions.get(ver - 1).get(subject).get(i).getId() == ID) {
+//                 versions.get(ver - 1).get(subject).get(i).storeFile(path);
                 
-                break;
-            }
-        }
+//                 break;
+//             }
+//         }
     }
     
     // void Modify(String subject, int ID, int ver, String mod){
