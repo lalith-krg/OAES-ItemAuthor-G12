@@ -1,0 +1,15 @@
+Operations:
+
+ID      Operation
+
+0       Exit
+
+1       Add Question
+
+2       Upload Question using File
+
+3       Modify Question
+
+4       Replace Version
+
+5       Delete Version
