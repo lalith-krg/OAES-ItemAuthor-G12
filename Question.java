@@ -1,5 +1,3 @@
-import javax.swing.AbstractAction;
-
 abstract class Question{
     public abstract int getId();
     public abstract String getQues();
