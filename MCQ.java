@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class MCQ extends Question{
     int id, version;
     String subject, Ques;
+    String[] options = null;
 
     @Override
     public int getId() {
@@ -11,8 +12,31 @@ public class MCQ extends Question{
     }
 
     @Override
+    public int getVersion() {
+        return this.version;
+    }
+
+    @Override
+    public String getSubject() {
+        return this.subject;
+    }
+
+    @Override
     public String getQues(){
         return this.Ques; 
+    }
+
+    @Override
+    public boolean isSubjective() {
+        if (options == null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String[] getOptions() {
+        return this.options;
     }
 
     @Override
@@ -47,5 +71,14 @@ public class MCQ extends Question{
     @Override
     public void setVersion(int ver) {
         this.version = ver;
+    }
+
+    @Override
+    public void addOptions(String[] inp) {
+        this.options = new String[inp.length];
+
+        for (int i = 0; i < inp.length; i++) {
+            this.options[i] = inp[i];
+        }
     }
 }

@@ -5,8 +5,7 @@ public class Menu{
     
     Items items = new Items();
     public static void main(String[] args) {
-        File file = new File("D:/IIITB/Sem7/SA/A3/Instructions.txt");
-
+        File file = new File("/Users/tarunreddy/Desktop/Semester 7/SA/OAES/OAES-ItemAuthor-G12/Instructions.txt");
         Menu menu = new Menu();
         
         try {
@@ -27,7 +26,7 @@ public class Menu{
                 } else if (op == 1) {
                     menu.Create(inp);
                 } else if (op == 2) {
-                    menu.ReadFile(inp);
+                    // menu.ReadFile(inp);
                 } else if (op == 3) {
                     menu.Modify(inp);
                 } else if (op == 4) {
@@ -39,13 +38,15 @@ public class Menu{
 
             inp.close();
             sc.close();
-
+            Items.closeConnection();
         } catch (Exception e) {
             System.out.println(e.toString());
         }
     }
 
     void Create(Scanner inp){
+        Question ques;
+
         System.out.println("Enter Subject:");
         String subject = inp.nextLine();
 
@@ -64,12 +65,16 @@ public class Menu{
         while(true){
             System.out.println("1 To type down question\n2 To upload file\n");
             int flow = inp.nextInt();
+            inp.nextLine();
 
             if(flow==1){
                 System.out.println("Type your question below\n");
                 String q = inp.nextLine();
                 
                 if(type==1){
+                    ques = new MCQ();
+                    ques.initialize(ID, subject);
+
                     String[] options = new String[4];
 
                     System.out.println("Enter option 1:");
@@ -84,10 +89,15 @@ public class Menu{
                     System.out.println("Enter option 4:");
                     options[3] = inp.nextLine();
                     
-                    items.Create(ID, subject, ver, type, q, options);
+                    ques.addQ(q);
+                    ques.addOptions(options);
+                    items.Create(ques);
                 }
                 else{
-                    items.Create(ID, subject, ver, type, q);
+                    ques = new Subjective(); 
+                    ques.initialize(ID, subject);
+                    ques.addQ(q);
+                    items.Create(ques);
                 }
                 break;
             }
@@ -106,12 +116,12 @@ public class Menu{
     }
     
     void Modify(Scanner inp){
-        System.out.println("Which subject do you want to modify:");
-        String subject = inp.nextLine();
+        // System.out.println("Which subject do you want to modify:");
+        // String subject = inp.nextLine();
     
-        System.out.println("Id of the question:");
-        int ID = inp.nextInt();
-        inp.nextLine();
+        // System.out.println("Id of the question:");
+        // int ID = inp.nextInt();
+        // inp.nextLine();
     
         // System.out.println("Enter Version:");
         // int ver = inp.nextInt();
@@ -123,6 +133,7 @@ public class Menu{
         while(true){
             System.out.println("1 To create new version of question\n2 To replace last version");
             int flow = inp.nextInt();
+            inp.nextLine();
 
             if(flow==1){
                 // System.out.println("Type your question below");
@@ -137,7 +148,8 @@ public class Menu{
                 // String path = inp.nextLine();
         
                 // items.ReadFile(ID, subject, ver, path);
-                break;
+
+                ReplaceVer(inp);;
             }
             else{
                 System.out.println("Invalid option. Please choose one of the below");

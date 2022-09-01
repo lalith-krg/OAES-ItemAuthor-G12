@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Subjective extends Question{
     int id, version;
     String subject, Ques;
+    String[] options = null;
 
     @Override
     public int getId() {
@@ -11,8 +12,26 @@ public class Subjective extends Question{
     }
 
     @Override
+    public int getVersion() {
+        return this.version;
+    }
+
+    @Override
+    public String getSubject() {
+        return this.subject;
+    }
+
+    @Override
     public String getQues(){
         return this.Ques; 
+    }
+
+    @Override
+    public boolean isSubjective() {
+        if (options == null) {
+            return true;
+        }
+        return false;
     }
 
     @Override
