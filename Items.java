@@ -13,6 +13,7 @@ public class Items{
             System.out.println("Connection failed!");
         } else {
             System.out.println("Successfully Connected to the Database!");
+            // create if author already doesn't exist
         }
     }
 
@@ -56,32 +57,47 @@ public class Items{
         }
     }
     
-    // void Create(int ID, String subject, int ver, int type, String q, String[] options){
-
+    // void Create(String subject, int ID, int ver, String qStmt, String[] options){
+        
     //     if (con == null) {
     //         System.out.println("Not connected to Database!");
 
     //         return;
     //     }
-    
-    //     if (versions.size() < ver) {
-    //         HashMap<String, ArrayList<Question>> map = new HashMap<String, ArrayList<Question>>();
-    //         versions.add(map);
-    //     }
-    
-    //     MCQ mcq = new MCQ();
-
-    //     mcq.initialize(ID, subject);
         
-    //     if (!versions.get(ver - 1).containsKey(subject)) {
-    //         versions.get(ver - 1).put(subject, new ArrayList<Question>());
-    //     }
+    //     try {
+    //         Statement st = con.createStatement();
+    //         String qr = "insert into questions values (" + Integer.toString(q.getId()) + "," + Integer.toString(q.getVersion()) + ",'" + q.getSubject() + "','" + q.getQues() + "', null, null, null, null);";
+            
+    //         if (!q.isSubjective()) {
+    //             String[] temp = q.getOptions();
 
-    //     versions.get(ver - 1).get(subject).add(mcq);
-        
+    //             qr = "insert into questions values (" + Integer.toString(q.getId()) + "," + Integer.toString(q.getVersion()) + ",'" + q.getSubject() + "','" + q.getQues() + "','" + temp[0]+ "','" + temp[1]+ "','" + temp[2]+ "','" + temp[3] + "');";
+    //         }
+            
+    //         int mod = st.executeUpdate(qr);
+
+    //         System.out.println("Number of statements affected: " + Integer.toString(mod));
+    
+    //         // if (versions.size() < ver) {
+    //         //     HashMap<String, ArrayList<Question>> map = new HashMap<String, ArrayList<Question>>();
+    //         //     versions.add(map);
+    //         // }
+
+    //         // Subjective sub = new Subjective();
+
+    //         // sub.initialize(ID, subject);
+            
+    //         // if (!versions.get(ver - 1).containsKey(subject)) {
+    //         //     versions.get(ver - 1).put(subject, new ArrayList<Question>());
+    //         // }
+    //         // versions.get(ver - 1).get(subject).add(sub);
+    //     } catch (Exception e) {
+    //         System.out.println(e.toString());
+    //     }
     // }
     
-    void ReadFile(int ID, String subject, int ver, String path){
+    void ReadFile(Question q, String path){
 
         if (con == null) {
             System.out.println("Not connected to Database!");

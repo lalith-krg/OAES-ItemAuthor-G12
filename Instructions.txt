@@ -6,10 +6,6 @@ ID      Operation
 
 1       Add Question
 
-2       Upload Question using File
+2       Modify Question
 
-3       Modify Question
-
-4       Replace Version
-
-5       Delete Version
+3       Delete Version
