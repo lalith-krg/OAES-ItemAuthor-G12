@@ -26,12 +26,8 @@ public class Menu{
                 } else if (op == 1) {
                     menu.Create(inp);
                 } else if (op == 2) {
-                    // menu.ReadFile(inp);
-                } else if (op == 3) {
                     menu.Modify(inp);
-                } else if (op == 4) {
-                    menu.ReplaceVer(inp);
-                } else if (op == 5) {
+                } else if (op == 3) {
                     menu.Delete(inp);
                 }
             }
@@ -45,7 +41,6 @@ public class Menu{
     }
 
     void Create(Scanner inp){
-        Question ques;
 
         System.out.println("Enter Subject:");
         String subject = inp.nextLine();
@@ -54,9 +49,9 @@ public class Menu{
         int ID = inp.nextInt();
         inp.nextLine();
     
-        System.out.println("Enter Version:");
-        int ver = inp.nextInt();
-        inp.nextLine();
+        // System.out.println("Enter Version:");
+        // int ver = inp.nextInt();
+        // inp.nextLine();
         
         System.out.println("Type of question\n  1 MCQ\t2 Subjective\n");
         int type = inp.nextInt();
@@ -69,11 +64,9 @@ public class Menu{
 
             if(flow==1){
                 System.out.println("Type your question below\n");
-                String q = inp.nextLine();
+                String qStmt = inp.nextLine();
                 
                 if(type==1){
-                    ques = new MCQ();
-                    ques.initialize(ID, subject);
 
                     String[] options = new String[4];
 
@@ -89,27 +82,37 @@ public class Menu{
                     System.out.println("Enter option 4:");
                     options[3] = inp.nextLine();
                     
-                    ques.addQ(q);
-                    ques.addOptions(options);
-                    items.Create(ques);
+                    // Question q = QFactory.create(ID, subject, type, qStmt, options);
+                    Question q = new MCQ();
+                    q.initialize(ID, subject);
+                    q.addQ(qStmt);
+                    q.addOptions(options);
+            
+                    items.Create(q);
                 }
                 else{
-                    ques = new Subjective(); 
-                    ques.initialize(ID, subject);
-                    ques.addQ(q);
-                    items.Create(ques);
+                    
+                    // Question q = QFactory.create(ID, subject, type, qStmt, options);
+                    Question q = new Subjective();
+                    q.initialize(ID, subject);
+                    q.addQ(qStmt);
+
+                    items.Create(q);
                 }
                 break;
             }
             else if(flow==2){
                 System.out.println("Enter the file path:");
                 String path = inp.nextLine();
+                    
+                Question q = new Subjective();
+                q.initialize(ID, subject);
         
-                items.ReadFile(ID, subject, ver, path);
+                items.ReadFile(q, path);
                 break;
             }
             else{
-                System.out.println("Invalid option. Please choose one of the below\n");
+                System.out.println("\nInvalid option. Please choose one of the below\n\n");
             }
         }
 
@@ -130,6 +133,65 @@ public class Menu{
         // System.out.println("Modification:");
         // String mod = inp.nextLine();
 
+        // Display questions
+
+        System.out.println("Enter ID of question you want to edit:");
+        int ID = inp.nextInt();
+        inp.nextLine();
+
+        // check type of question
+        int type = 1;
+
+        while(true){
+            System.out.println("1 To type down question\n2 To upload file\n");
+            int flow = inp.nextInt();
+            inp.nextLine();
+
+            if(flow==1){
+                System.out.println("Type your question below\n");
+                String q = inp.nextLine();
+                
+                if(type==1){
+                    // mcq
+                    
+                    // ques = new MCQ();
+                    // ques.initialize(ID, subject);
+
+                    String[] options = new String[4];
+
+                    System.out.println("Enter option 1:");
+                    options[0] = inp.nextLine();
+
+                    System.out.println("Enter option 2:");
+                    options[1] = inp.nextLine();
+
+                    System.out.println("Enter option 3:");
+                    options[2] = inp.nextLine();
+
+                    System.out.println("Enter option 4:");
+                    options[3] = inp.nextLine();
+                    
+                    // ques.addQ(q);
+                    // ques.addOptions(options);
+                    // items.Create(ques);
+                }
+                else{
+                    // subjective
+                }
+                break;
+            }
+            else if(flow==2){
+                System.out.println("Enter the file path:");
+                String path = inp.nextLine();
+        
+                // items.ReadFile(ID, subject, ver, path);
+                break;
+            }
+            else{
+                System.out.println("Invalid option. Please choose one of the below\n");
+            }
+        }
+
         while(true){
             System.out.println("1 To create new version of question\n2 To replace last version");
             int flow = inp.nextInt();
@@ -140,7 +202,13 @@ public class Menu{
                 // String q = inp.nextLine();
                 // inp.nextLine();
 
-                Create(inp);
+                System.out.println("Enter Version:");
+                int ver = inp.nextInt();
+                inp.nextLine();
+
+                // check which type of question
+                // AND ask new statements OR file upload
+
                 break;
             }
             else if(flow==2){
@@ -149,7 +217,7 @@ public class Menu{
         
                 // items.ReadFile(ID, subject, ver, path);
 
-                ReplaceVer(inp);;
+                // ReplaceVer(inp);
             }
             else{
                 System.out.println("Invalid option. Please choose one of the below");
@@ -159,23 +227,23 @@ public class Menu{
         // items.Modify(subject, ID, ver, mod);
     }
     
-    void ReplaceVer(Scanner inp){
-        System.out.println("Which subject do you want to modify:");
-        String subject = inp.nextLine();
+    // void ReplaceVer(Scanner inp){
+    //     System.out.println("Which subject do you want to modify:");
+    //     String subject = inp.nextLine();
     
-        System.out.println("Id of the question:");
-        int ID = inp.nextInt();
-        inp.nextLine();
+    //     System.out.println("Id of the question:");
+    //     int ID = inp.nextInt();
+    //     inp.nextLine();
     
-        System.out.println("Enter Version:");
-        int ver = inp.nextInt();
-        inp.nextLine();
+    //     System.out.println("Enter Version:");
+    //     int ver = inp.nextInt();
+    //     inp.nextLine();
     
-        System.out.println("Modification:");
-        String mod = inp.nextLine();
+    //     System.out.println("Modification:");
+    //     String mod = inp.nextLine();
 
-        items.ReplaceVer(subject, ID, ver, mod);
-    }
+    //     items.ReplaceVer(subject, ID, ver, mod);
+    // }
     
     void Delete(Scanner inp){
         System.out.println("From which subject do you want to delete:");
@@ -190,6 +258,10 @@ public class Menu{
         inp.nextLine();
     
         items.Delete(subject, ID, ver);
+    }
+
+    void Display(){
+        //
     }
 }
 
