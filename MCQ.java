@@ -5,6 +5,7 @@ public class MCQ extends Question{
     int id, version;
     String subject, Ques;
     String[] options = null;
+    static int versions = 1;
 
     @Override
     public int getId() {
@@ -40,14 +41,23 @@ public class MCQ extends Question{
     }
 
     @Override
-    public void initialize (int ID, String subject) {
+    public void initialize (String subject, String q, int ID) {
         this.id = ID;
+        this.version = 1;
+        this.type = 1;
         this.subject = subject;
+        this.Ques = q;
+        versions=1;
     }
 
     @Override
-    public void addQ (String q) {
+    public void newVer(int ID, String subject, String q){
+        this.id = ID;
+        this.version = versions+1;
+        this.type = 2;
+        this.subject = subject;
         this.Ques = q;
+        versions++;
     }
 
     @Override
