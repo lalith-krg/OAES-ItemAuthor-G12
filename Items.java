@@ -4,7 +4,6 @@ import java.sql.*;
 
 public class Items{
     static Connection con;    
-//     ArrayList<HashMap<String, ArrayList<Question>>> versions = new ArrayList<HashMap<String, ArrayList<Question>>>();
 
     Items(){
         con = connect.getConnection();
@@ -27,7 +26,7 @@ public class Items{
         
         try {
             Statement st = con.createStatement();
-            String qr = "insert into questions values (" + Integer.toString(q.getId()) + "," + Integer.toString(q.getVersion()) + ",'" + q.getSubject() + "','" + q.getQues() + "', null, null, null, null);";
+            String qr = "insert into questions values (" + Integer.toString(q.getId()) + "," + Integer.toString(q.getVersion()) + ",'" + Integer.toString(q.getType()) + ",'" + q.getSubject() + "','" + q.getQues() + "', null, null, null, null);";
             
             if (!q.isSubjective()) {
                 String[] temp = q.getOptions();
@@ -38,100 +37,21 @@ public class Items{
             int mod = st.executeUpdate(qr);
 
             System.out.println("Number of statements affected: " + Integer.toString(mod));
-    
-            // if (versions.size() < ver) {
-            //     HashMap<String, ArrayList<Question>> map = new HashMap<String, ArrayList<Question>>();
-            //     versions.add(map);
-            // }
-
-            // Subjective sub = new Subjective();
-
-            // sub.initialize(ID, subject);
-            
-            // if (!versions.get(ver - 1).containsKey(subject)) {
-            //     versions.get(ver - 1).put(subject, new ArrayList<Question>());
-            // }
-            // versions.get(ver - 1).get(subject).add(sub);
         } catch (Exception e) {
             System.out.println(e.toString());
         }
     }
     
-    // void Create(String subject, int ID, int ver, String qStmt, String[] options){
-        
-    //     if (con == null) {
-    //         System.out.println("Not connected to Database!");
-
-    //         return;
-    //     }
-        
-    //     try {
-    //         Statement st = con.createStatement();
-    //         String qr = "insert into questions values (" + Integer.toString(q.getId()) + "," + Integer.toString(q.getVersion()) + ",'" + q.getSubject() + "','" + q.getQues() + "', null, null, null, null);";
-            
-    //         if (!q.isSubjective()) {
-    //             String[] temp = q.getOptions();
-
-    //             qr = "insert into questions values (" + Integer.toString(q.getId()) + "," + Integer.toString(q.getVersion()) + ",'" + q.getSubject() + "','" + q.getQues() + "','" + temp[0]+ "','" + temp[1]+ "','" + temp[2]+ "','" + temp[3] + "');";
-    //         }
-            
-    //         int mod = st.executeUpdate(qr);
-
-    //         System.out.println("Number of statements affected: " + Integer.toString(mod));
-    
-    //         // if (versions.size() < ver) {
-    //         //     HashMap<String, ArrayList<Question>> map = new HashMap<String, ArrayList<Question>>();
-    //         //     versions.add(map);
-    //         // }
-
-    //         // Subjective sub = new Subjective();
-
-    //         // sub.initialize(ID, subject);
-            
-    //         // if (!versions.get(ver - 1).containsKey(subject)) {
-    //         //     versions.get(ver - 1).put(subject, new ArrayList<Question>());
-    //         // }
-    //         // versions.get(ver - 1).get(subject).add(sub);
-    //     } catch (Exception e) {
-    //         System.out.println(e.toString());
-    //     }
-    // }
-    
-    void ReadFile(Question q, String path){
-
-        if (con == null) {
-            System.out.println("Not connected to Database!");
-
-            return;
-        }
-
-//         for (int i = 0; i < versions.get(ver - 1).get(subject).size(); i++) {
-//             if (versions.get(ver - 1).get(subject).get(i).getId() == ID) {
-//                 versions.get(ver - 1).get(subject).get(i).storeFile(path);
-                
-//                 break;
-//             }
-//         }
-    }
-    
-    // void Modify(String subject, int ID, int ver, String mod){
+    // void ReadFile(Question q, String path){
 
     //     if (con == null) {
     //         System.out.println("Not connected to Database!");
 
     //         return;
     //     }
-    
-    //     for (int i = 0; i < versions.get(ver - 1).get(subject).size(); i++) {                        
-    //         if (versions.get(ver - 1).get(subject).get(i).getId() == ID) {
-    //             versions.get(ver - 1).get(subject).get(i).addQ(mod);
-    
-    //             break;
-    //         }
-    //     }
     // }
     
-    void ReplaceVer(String subject, int ID, int ver, String modification){
+    void ReplaceVer(Question q, int ver){
 
         if (con == null) {
             System.out.println("Not connected to Database!");
@@ -141,24 +61,16 @@ public class Items{
 
         try {
             Statement st = con.createStatement();
-            String query = "update questions set Question='" + modification + "' where ID=" + Integer.toString(ID) + " and Subject like '" + subject + "' and Version=" + Integer.toString(ver) + ";";
+            String query = "update questions set Question='" + q.getQues() + "' where ID=" + Integer.toString(q.getId()) + " and Subject like '" + q.getSubject() + "' and Version=" + Integer.toString(ver) + ";";
             int mod = st.executeUpdate(query);
 
             System.out.println("Number of statements affected: " + Integer.toString(mod));
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-        
-        // for (int i = 0; i < versions.get(ver - 1).get(subject).size(); i++) {                        
-        //     if (versions.get(ver - 1).get(subject).get(i).getId() == ID) {
-        //         versions.get(ver - 1).get(subject).get(i).addQ(mod);
-    
-        //         break;
-        //     }
-        // }
     }
     
-    void Delete(String subject, int ID, int ver){
+    void Delete(int ID, int ver){
 
         if (con == null) {
             System.out.println("Not connected to Database!");
@@ -168,21 +80,45 @@ public class Items{
 
         try {
             Statement st = con.createStatement();
-            String query = "delete from questions where ID=" + Integer.toString(ID) + " and Subject like '" + subject + "' and Version=" + Integer.toString(ver) + ";";
+            String query = "delete from questions where ID=" + Integer.toString(ID) + "' and Version=" + Integer.toString(ver) + ";";
             int mod = st.executeUpdate(query);
 
             System.out.println("Number of statements affected: " + Integer.toString(mod));
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-    
-        // for (int i = 0; i < versions.get(ver - 1).get(subject).size(); i++) {
-        //     if (ID == versions.get(ver - 1).get(subject).get(i).getId()) {
-        //         versions.get(ver - 1).get(subject).remove(versions.get(ver - 1).get(subject).get(i));
-    
-        //         break;
-        //     }
-        // }
+    }
+
+    void Display(){
+
+        if (con == null) {
+            System.out.println("Not connected to Database!");
+
+            return;
+        }
+
+        try {
+            Statement st = con.createStatement();
+            String query = "select * from questions";
+            ResultSet rs = st.executeQuery(query);
+
+            // System.out.println("Number of statements affected: " + Integer.toString(mod));
+            while(rs.next()){
+                int id = rs.getInt("ID");
+                int ver = rs.getInt("Version");
+                int type = rs.getInt("Type");
+                String subject = rs.getString("Subject");
+                String ques = rs.getString("Question");
+                String Option1 = rs.getString("Option1");
+                String Option2 = rs.getString("Option2");
+                String Option3 = rs.getString("Option3");
+                String Option4 = rs.getString("Option4");
+
+                System.out.println(Integer.toString(id)+"\t"+Integer.toString(ver)+"\t"+Integer.toString(type)+"\t"+subject+"\t"+ques+"\t"+Option1+"\t"+Option2+"\t"+Option3+"\t"+Option4);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     static void closeConnection() {
